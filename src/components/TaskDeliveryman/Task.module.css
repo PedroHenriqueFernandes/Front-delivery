@@ -1,0 +1,80 @@
+.listTask{
+    display: flex;
+    background: var(--gray-500);
+    flex-direction: row;
+    color: var(--gray-100);
+    justify-content: space-between;
+    align-items: center;
+    width: 46.125rem;
+    height: 4.5rem;
+    padding: 0 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+}
+
+.listTask img{
+    color: var(--gray-300);
+    height: 1rem;
+}
+
+.listTask button{
+    background: transparent;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.checkAndText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.listTaskInput {
+    height: 1.5rem;
+    background: transparent;
+    border: 1px solid var(--blue-500);
+}
+
+.noTask .bold{
+    font-weight: bold;
+}
+
+.noTask p{
+    text-align: center;
+}
+
+.circleCheckBox:empty{
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 2px solid var(--blue-500);
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circleCheckBox{
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 2px solid var(--purple-700);
+    background: var(--purple-700);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circleCheckBox:not(:empty) + p{
+    text-decoration: line-through;
+}
+
+
+.circleCheckBox img{
+    height: .5rem;
+}
