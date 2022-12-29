@@ -34,6 +34,7 @@ export function List() {
     const [tasks, setTasks] = useState<Task[]>([])
     const [isEmpty, setIsEmpty] = useState(true)
     const [taskCheck, setTaskCheck] = useState(0)
+    const [idClient, setIdClient] = useState('')
 
     const tokenClient = localStorage.getItem('@tokenClient')
 
@@ -42,7 +43,8 @@ export function List() {
     useEffect(() => {
         axios.get('http://localhost:3000/client/deliveries')
         .then(function (response) {
-            const newTasks = response.data[0].deliveries.map((task: DeliveriesTaskBD) => {
+            setTasks([])
+            const newTasks: Task[] = response.data[0].deliveries.map((task: DeliveriesTaskBD) => {
                 return {
                     id: task.id,
                     content: task.item_name,
@@ -51,26 +53,34 @@ export function List() {
                 }
             })
 
-            console.log(newTasks)
+            setIdClient(response.data[0].id)
+
+            setTaskCheck(newTasks.filter(task => task.isCheck === true).length)
     
             setTasks(newTasks)
         })
         .catch(function (error) {
             console.log(error);
         })
-    }, [])
+    }, [tasks])
 
     function handleCreateTasks(event: ChangeEvent<HTMLFormElement>) {
         event!.preventDefault()
+
+        axios.post('http://localhost:3000/delivery', {
+            id_client: idClient,
+            item_name: newTask
+        })
 
         setIsEmpty(true)
         setTasks([...tasks, {
             id: uuidv4(),
             content: newTask,
             isCheck: false,
-            created_at: new Date().toLocaleDateString()
+            created_at: "2022-12-29T13:44:50.639Z"
         }])
         setNewTask('')
+        console.log(newTask)
     }
 
     function setCheck(id: string) {

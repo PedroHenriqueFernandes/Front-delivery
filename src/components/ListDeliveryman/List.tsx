@@ -1,11 +1,12 @@
 import { useState, ChangeEvent, useEffect } from 'react'
-import { TaskDeliveryman } from '../TaskDeliveryman/Task' 
+import { TaskDeliveryman } from '../TaskDeliveryman/Task'
 import { v4 as uuidv4 } from 'uuid'
 import img from '../../assets/Clipboard.svg'
 import axios from 'axios'
 
 import styles from './List.module.css'
 import imgPlus from '../../assets/plus.svg'
+import { NavTasksDeliveryman } from '../NavTasksDeliveryman'
 
 interface Task {
     id: string,
@@ -14,7 +15,7 @@ interface Task {
     created_at: string
 }
 
-interface TaskBD{
+interface TaskBD {
     id: string,
     item_name: string,
     created_at: string,
@@ -22,32 +23,32 @@ interface TaskBD{
 }
 
 export function List() {
-    const [newTask, setNewTask] = useState('')
     const [tasks, setTasks] = useState<Task[]>([])
-    const [isEmpty, setIsEmpty] = useState(true)
     const [taskCheck, setTaskCheck] = useState(0)
 
     const token = localStorage.getItem('@tokenDeliveryman')
 
-    axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
+    axios.defaults.headers.common = { 'Authorization': `bearer ${token}` }
 
     useEffect(() => {
         axios.get('http://localhost:3000/delivery/available')
-        .then(function (response) {
-            const newTasks = response.data.map((task: TaskBD) => {
-                return {
-                    id: task.id,
-                    content: task.item_name,
-                    isCheck: false,
-                    created_at: task.created_at
-                }
+            .then(function (response) {
+                const newTasks: Task[] = response.data.map((task: TaskBD) => {
+                    return {
+                        id: task.id,
+                        content: task.item_name,
+                        isCheck: false,
+                        created_at: task.created_at
+                    }
+                })
+
+                setTaskCheck(newTasks.filter(task => task.isCheck === true).length)
+
+                setTasks(newTasks)
             })
-    
-            setTasks(newTasks)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+            .catch(function (error) {
+                console.log(error);
+            })
     }, [])
 
     function setCheck(id: string) {
@@ -87,6 +88,7 @@ export function List() {
             </form> */}
 
             <div className={styles.contentList}>
+                <NavTasksDeliveryman />
                 <div className={styles.boxList}>
                     <header className={styles.headerList}>
                         <div className={styles.tarefasCriadas}>Tarefas Criadas <div className={styles.numberCount}><span>{tasks.length}</span></div></div>
