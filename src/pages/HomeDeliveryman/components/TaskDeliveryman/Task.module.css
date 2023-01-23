@@ -18,7 +18,6 @@
 }
 
 .listTask button{
-    background: transparent;
     border: 0;
     display: flex;
     justify-content: center;
@@ -51,6 +50,8 @@
 .circleCheckBox:empty{
     height: 1.5rem;
     width: 1.5rem;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
     border: 2px solid var(--blue-500);
     background: transparent;
     border-radius: 50%;
@@ -62,6 +63,8 @@
 .circleCheckBox{
     height: 1.5rem;
     width: 1.5rem;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
     border: 2px solid var(--purple-700);
     background: var(--purple-700);
     border-radius: 50%;
@@ -79,9 +82,52 @@
     height: .5rem;
 }
 
-.timeAndDeleteButtonTask{
+.buttonAssignTask{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem .5rem;
+    border-radius: 6px;
+    background-color: var(--blue-500);
+    color: white;
+}
+
+.buttonAssignedTask{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem .5rem;
+    border-radius: 6px;
+    background-color: var(--purple-500);
+    color: white;
+}
+
+.buttonAndCreatedAtContainer{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+
+@media (max-width: 768px){
+    *{
+        font-size: 0.8rem;
+    }
+
+    button{
+        height: 3rem;
+        min-width: 5rem;
+    }
+
+    .buttonAndCreatedAtContainer p{
+        font-size: 0.5rem;
+    }
+
+    .createdAtContainer{
+        width: 30px;
+    }
+
+    button p{
+        font-size: 0.8rem;
+    }
 }

@@ -19,6 +19,10 @@ export const Content = styled.div`
     border-radius: 10px;
     width: 30vw;
     gap: 20px;
+
+    @media (max-width: 768px) {
+        width: 90vw;
+    }
 `;
 
 export const Title = styled.h1`

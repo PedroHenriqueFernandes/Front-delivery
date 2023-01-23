@@ -5,10 +5,10 @@ export function NavTasksDeliveryman() {
   return (
     <HeaderContainer>
       <nav>
-        <NavLink to="/" title="Timer">
+        <NavLink to="/homedeliveryman" title="Timer">
           A FAZER
         </NavLink>
-        <NavLink to="/history" title="Histórico">
+        <NavLink to="/minhastarefas/deliveryman" title="Histórico">
           ATRIBUIDAS A MIM
         </NavLink>
       </nav>

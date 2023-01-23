@@ -1,27 +1,26 @@
 import styles from './Task.module.css'
-// import trash from '../../assets/trash.svg'
-import checkImg from '../../assets/check.svg'
-import { useState } from 'react'
+import checkImg from '../../../../assets/check.svg'
+import { useContext, useState } from 'react'
 import moment from 'moment'
 import axios from 'axios';
+import { TasksContext } from '../../../../context/TasksContext';
 
 interface Tasks {
     id: string;
     content: string;
     isCheck: boolean
     created_at: string
-    deleteTask: (task: string) => void
-    checkTask: (task: string) => void
 }
 
-export function TaskDeliveryman({ id, content, created_at, checkTask, isCheck }: Tasks) {
-    const [check, setCheck] = useState(isCheck)
+export function TaskDeliveryman({ id, content, created_at, isCheck }: Tasks) {
+    const [check, setCheckState] = useState(isCheck)
+    const { setCheck } = useContext(TasksContext)
     const [idDeliveryman, setIdDeliveryman] = useState('')
     const [assignedTask, setAssignedTask] = useState('ATRIBUIR A MIM')
 
     function handleCheckTask() {
-        setCheck(!check)
-        checkTask(id)
+        setCheckState(!check)
+        setCheck(id)
     }
 
     function showTask() {
@@ -67,8 +66,12 @@ export function TaskDeliveryman({ id, content, created_at, checkTask, isCheck }:
                 </div>
 
                 <div className={styles.buttonAndCreatedAtContainer}>
-                    <p>criada em {dateFormat} às {hourFormat}:{minutes}</p>
-                    <button onClick={handleAssignTask} className={styles.assignTask}>{assignedTask}</button>
+                    <p className={styles.createdAtContainer}>criada em {dateFormat} às {hourFormat}:{minutes}</p>
+                    { (assignedTask === 'ATRIBUIR A MIM') ? 
+                    <button onClick={handleAssignTask} className={styles.buttonAssignTask}><p>{assignedTask}</p></button> 
+                    : 
+                    <button className={styles.buttonAssignedTask}><p>{assignedTask}</p></button>
+                    }
                 </div>
             </div>
         </div>

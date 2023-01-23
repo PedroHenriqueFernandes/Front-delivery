@@ -56,6 +56,12 @@
     margin-top: 4rem;
 }
 
+@media(max-width: 768px){
+    .contentList{
+        margin-top: 1.5rem;
+    }
+}
+
 .boxList{
     width: 90%;
     display: flex;
