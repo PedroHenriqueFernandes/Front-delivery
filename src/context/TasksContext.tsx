@@ -41,12 +41,12 @@ export function TaskProvider({ children }: TaskProviderProps) {
                         id: task.id,
                         item_name: task.item_name,
                         isCheck: task.end_at ? true : false,
-                        created_at: task.created_at
+                        created_at: task.created_at,
+                        end_at: task.end_at
                     }
                 }).sort(function(a: TaskProps, b: TaskProps) {
                     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
                 })
-                const idDeliveryman = response.data[0].id
                 setIdDeliveryman(idDeliveryman)
                 setTasksAssigned(newTasksAssigned)
             }).
@@ -118,6 +118,13 @@ export function TaskProvider({ children }: TaskProviderProps) {
             }
 
             return task
+        })
+        const tokenDeliveryman = localStorage.getItem('@tokenDeliveryman')
+        axios.defaults.headers.common = { 'Authorization': `bearer ${tokenDeliveryman}` }
+
+        axios.put(`http://localhost:3000/delivery/updateEndDate/${id}`, {
+            id_deliveryman: idDeliveryman,
+            id_delivery: id
         })
 
         setTasks(newTasksWithNewCheck)

@@ -108,12 +108,3 @@ export const NumberTasks = styled.div`
     justify-content: center;
     border-radius: 50%;
 `;
-
-export const TasksIsEmpty = styled.div`
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 4rem 0;
-`;

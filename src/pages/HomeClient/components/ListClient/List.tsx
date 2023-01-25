@@ -1,13 +1,14 @@
 import { useState, ChangeEvent, useContext } from 'react'
 import { TaskClient } from '../TaskClient/Task'
 import { v4 as uuidv4 } from 'uuid'
-import img from '../../../../assets/Clipboard.svg'
 import axios from 'axios'
 
 import imgPlus from '../../../../assets/plus.svg'
-import { CompletedTasks, Container, FormContainer, HeaderSummary, ListContainer, NumberTasks, SummaryList, TasksCreated, TasksIsEmpty } from './styles'
+import { CompletedTasks, Container, FormContainer, HeaderSummary, ListContainer, NumberTasks, SummaryList, TasksCreated } from './styles'
 import { TasksContext } from '../../../../context/TasksContext'
 import { TaskProps } from '../../../../reducer/reducer'
+import { TasksIsEmpty } from '../../../../components/TasksIsEmpty'
+import { Summary } from '../../../../components/Summary'
 
 interface Task {
     id: string,
@@ -85,26 +86,7 @@ export function List() {
             </FormContainer>
 
             <ListContainer>
-                <SummaryList>
-                    <HeaderSummary>
-                        <TasksCreated>
-                            Tarefas Criadas
-                            <NumberTasks>
-                                <span>
-                                    {tasksClient.length}
-                                </span>
-                            </NumberTasks>
-                        </TasksCreated>
-                        <CompletedTasks>
-                            Concluidas
-                            <NumberTasks>
-                                <span>
-                                    {tasksCheck}
-                                </span>
-                            </NumberTasks>
-                        </CompletedTasks>
-                    </HeaderSummary>
-                </SummaryList>
+                <Summary tasksCreated={tasksClient.length} tasksFinished={tasksCheck} />
 
                 <div>
                     {(tasksClient.length >= 1) ? (
@@ -122,13 +104,7 @@ export function List() {
                             />
                         )
                         )) : (
-                        <TasksIsEmpty>
-                            <img src={img} alt="" />
-                            <div>
-                                <p>Você ainda não tem tarefas cadastradas</p>
-                                <p>Crie tarefas e organize seus itens a fazer</p>
-                            </div>
-                        </TasksIsEmpty>
+                        <TasksIsEmpty />
                     )}
                 </div>
             </ListContainer>

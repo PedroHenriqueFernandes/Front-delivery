@@ -1,39 +1,47 @@
 import styles from './Task.module.css'
 import checkImg from '../../../../assets/check.svg'
-import { useState, useEffect } from 'react'
-import axios from 'axios';
+import { useState, useEffect, useContext } from 'react'
 import { dateFormatter } from '../../../../utils/formatter';
+import { TasksContext } from '../../../../context/TasksContext';
 
 interface Tasks {
     id: string;
     content: string;
     isCheck: boolean
-    created_at: string
+    created_at: string;
+    end_at: string | undefined
     deleteTask: (task: string) => void
-    checkTask: (task: string) => void
     idDeliveryman: string
 }
 
-export function TaskAssignedDeliveryMan({ id, content, created_at, checkTask, isCheck, idDeliveryman }: Tasks) {
-    const [check, setCheck] = useState(isCheck)
+export function TaskAssignedDeliveryMan({ id, content, created_at, isCheck, end_at }: Tasks) {
+    const [check, setCheckLocal] = useState(isCheck)
+    const { setCheck } = useContext(TasksContext)
 
     useEffect(() => {
-        setCheck(isCheck)
+        setCheckLocal(isCheck)
     }, [])
 
     function handleCheckTask() {
-        setCheck(!check)
-        checkTask(id)
-
-        axios.put(`http://localhost:3000/delivery/updateEndDate/${id}`, {
-            id_deliveryman: idDeliveryman,
-            id_delivery: id
-        })
+        setCheckLocal(!check)
+        setCheck(id)
     }
 
-    function showTask() {
+    function showCheckTask() {
         if (check) {
             return <img src={checkImg} alt="" />
+        }
+    }
+
+
+    function showEndAt() {
+        if (end_at != undefined) {
+            const dateFormatEndAt = dateFormatter.format(new Date(end_at))
+            const [dateEndAt, hoursEndAt] = dateFormatEndAt.split(' ')
+
+            return (
+                <p>Finalizada em {dateEndAt} às {hoursEndAt}</p>
+            )
         }
     }
 
@@ -45,12 +53,13 @@ export function TaskAssignedDeliveryMan({ id, content, created_at, checkTask, is
             <div className={styles.listTask}>
                 <div className={styles.checkAndText}>
                     <div onClick={handleCheckTask} className={styles.circleCheckBox}>
-                        {showTask()}
+                        {showCheckTask()}
                     </div>
                     <p>{content}</p>
                 </div>
 
                 <div className={styles.buttonAndCreatedAtContainer}>
+                    {showEndAt()}
                     <p className={styles.createdAtContainer}>criada em {date} às {hours}</p>
                 </div>
             </div>
